@@ -26,6 +26,19 @@ public class MatrixGraph {
         }
     }
 
+    public int[][] getWeightMatrix() {
+        int[][] copy = new int[numVertices][numVertices];
+        for (int i = 0; i < numVertices; ++i) {
+            copy[i] = weights[i].clone();
+        }
+
+        return copy;
+    }
+
+    public int size() {
+        return numVertices;
+    }
+
     public void addEdge(int v1, int v2, int weight) {
         weights[v1][v2] = weight;
     }
@@ -43,15 +56,15 @@ public class MatrixGraph {
         return weights[v1][v2];
     }
 
-    public String toString() {
+    public static String matrixToString(int[][] matrix) {
         StringBuilder s = new StringBuilder();
 
-        for (int from = 0; from < numVertices; ++from) {
+        for (int from = 0; from < matrix.length; ++from) {
             String sep = "";
-            for (int to = 0; to < numVertices; ++to) {
+            for (int to = 0; to < matrix[from].length; ++to) {
                 s.append(sep);
-                if (hasEdge(from, to)) {
-                    s.append(getEdge(from, to));
+                if (matrix[from][to] < Integer.MAX_VALUE) {
+                    s.append(matrix[from][to]);
                 } else {
                     s.append('x');
                 }
@@ -61,6 +74,10 @@ public class MatrixGraph {
         }
 
         return s.toString();
+    }
+
+    public String toString() {
+        return matrixToString(weights);
     }
 
 }
